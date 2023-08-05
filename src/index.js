@@ -14,6 +14,7 @@ import NearbyPage from './Pages/Nearby/Nearby';
 import LoginPage from './Components/Login/LoginPage';
 import UserProvider from './Context/UserContext';
 import { ThemeProvider, createTheme } from '@mui/material';
+import BusinessPage from './Pages/BusinessPage/BusinessPage';
 
 
 const darkTheme = createTheme({
@@ -34,6 +35,10 @@ const router = createBrowserRouter([{
     {
       path: '/Restaurants',
       element: <RestaurantsPage />
+    },
+    {
+      path: '/restaurants/:businessId',
+      element: <BusinessPage />
     },
     {
       path: '/Winerys',

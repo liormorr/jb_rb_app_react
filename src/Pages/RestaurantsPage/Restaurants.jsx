@@ -1,26 +1,46 @@
 import axios from "axios"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import * as urls from "../../Infrastracture/urls";
+import RestaurantList from "../../Components/RestaurantList/RestaurantList";
+import { Divider, Stack } from "@mui/material";
 
 export default function RestaurantsPage() {
 
-  useEffect(
-      () => {
-          const fetchData = async () => {
-              try {
-                  const response = await axios.get(urls.RESTAURANTS_LIST_URL)
-                  console.log(response)
-              } catch (e) {
-                  console.error(e)
-              }
-          }
-          fetchData()
-      }
-      ,[]
-  )
+    const [restList, setRestList] = useState({results:[]})
+
+    const fetchData = async() => {
+        let urlToSend = urls.RESTAURANTS_LIST_URL
+        if (restList.results.length > 0) {
+            urlToSend = restList.next
+        }
+        try {
+            const response = await axios.get(urlToSend)
+            setRestList({...restList,
+                next: response.data.next, 
+                results: [...restList.results,...response.data.results]})
+            } catch (e) {
+                console.error(e)
+            }
+    }
+
+useEffect(
+    () => {
+        fetchData()
+    }
+    ,[]
+)
 
   return(
-      <h2>Restaurants page</h2>
-
+    <>
+    <h2>Restaurant Page</h2>
+    <Stack 
+    direction={'colum'} 
+    alignItems={'center'} 
+    justifyContent={'center'} 
+    spacing={2} 
+    divider={<Divider orientation="horizontal" flexItem />}>
+    <RestaurantList restList={restList} loadMore={fetchData} />
+    </Stack>
+      </>
   )
 }

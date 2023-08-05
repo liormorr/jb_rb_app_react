@@ -4,11 +4,13 @@ import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
 
 
 
 
-export default function RestaurantCard({restList}) {
+export default function BusinessCard({restList}) {
+const navigate = useNavigate()
 const logoPath = '../../RestaurantsPics/' + restList.id + 'l';
 const bannerPath = '../../RestaurantsPics/' + restList.id + 'b';
 
@@ -23,11 +25,6 @@ const bannerPath = '../../RestaurantsPics/' + restList.id + 'b';
       return false;
     }
   }};
-  console.log(isValidPath(logoPath))
-  console.log(isValidPath(bannerPath))
-  console.log(bannerPath)
-  console.log(restList.id)
-
 
   return (
     <Card sx={{ maxWidth: 600 }} variant="outlined">

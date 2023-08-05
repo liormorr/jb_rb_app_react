@@ -100,8 +100,8 @@ export default function TopAppBar({setOpen}) {
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: 'bottom',
+        horizontal: 'center',
       }}
       id={menuId}
       keepMounted
@@ -207,22 +207,8 @@ export default function TopAppBar({setOpen}) {
           </Container>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={1} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
             <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={2} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
+              size="medium"
               edge="end"
               aria-label="account of current user"
               aria-controls={menuId}
