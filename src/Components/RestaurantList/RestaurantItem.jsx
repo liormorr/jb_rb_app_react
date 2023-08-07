@@ -8,7 +8,7 @@ export default function RestaurantItem({restList}) {
 
   const handleClick = () => {
       console.log('blabal')
-      navigate(`/restaurants/${restList.id}`)
+      navigate(`/Restaurants/${restList.id}`)
   }
  
   return(

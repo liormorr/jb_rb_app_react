@@ -37,13 +37,11 @@ export default function LoginPage() {
   const handleSubmit = async(event) => {
     event.preventDefault();
     const response = await axios.post(LOGIN_URL, {username: email, password: password})
-    console.log(response)
     localStorage.setItem('token', response.data.access)
     const token = localStorage.getItem('token')
     const userDetailsResponse = await axios.get(USER_DETAILS_URL,{headers: {Authorization: `Bearer ${token}`}})
-    console.log(userDetailsResponse)
     setUser({
-      user: {...userDetailsResponse.data}
+      user: {...userDetailsResponse.data.results[0]}
     })
     navigate('/')
   };
@@ -90,10 +88,11 @@ export default function LoginPage() {
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              label="זכור אותי"
             />
             <Button
               type="submit"
@@ -101,17 +100,17 @@ export default function LoginPage() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              היכנס
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
-                  Forgot password?
+                  ?שכחת סיסמא
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link href="#" variant="body2" textAlign={'end'}>
+                  {"!עוד אין לך משתמש? הירשם כאן"}
                 </Link>
               </Grid>
             </Grid>

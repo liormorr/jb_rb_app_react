@@ -18,16 +18,24 @@ function App() {
   console.log(user)
 
   useEffect(() => {
-    const fetchData = async() => {
-    const token = localStorage.getItem('token')
-    if (token) {
-    const userDetailsResponse = await axios.get(USER_DETAILS_URL,{headers: {Authorization: `Bearer ${token}`}})
-    setUser({
-      user: {...userDetailsResponse.data}
-    })}
-  }
-  fetchData()
-  }, [])
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (token) {
+          const userDetailsResponse = await axios.get(USER_DETAILS_URL, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          setUser({
+            user: { ...userDetailsResponse.data },
+          });
+        }
+      } catch (error) {
+        console.error('Error while fetching user details:', error);
+      }
+    };
+    fetchData();
+  }, []);
+  
 
   return (
     <>

@@ -20,6 +20,10 @@ import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { SetUserContext, UserContext } from '../../Context/UserContext';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import AddIcon from '@mui/icons-material/Add';
+import SearchIcon from '@mui/icons-material/Search';
+import axios from 'axios';
+import { RESTAURANTS_LIST_URL } from '../../Infrastracture/urls';
 
 
 
@@ -37,6 +41,16 @@ const Search = styled('div')(({ theme }) => ({
     marginLeft: theme.spacing(3),
     width: 'auto',
   },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 }));
 
 
@@ -95,6 +109,14 @@ export default function TopAppBar({setOpen}) {
 
   }
 
+  const handleSearch = async (searchValue) => {
+    console.log(searchValue);
+    const response = await axios.get(`${RESTAURANTS_LIST_URL}/?name=${searchValue}`);
+    const searchData = response.data; 
+    console.log('Search result:', searchData);
+  
+  };
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -113,6 +135,7 @@ export default function TopAppBar({setOpen}) {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={() => handleChangePage('/login')}><PermIdentityIcon/> היכנס </MenuItem>
+      <MenuItem onClick={() => handleChangePage('/signup')}><AddIcon />  הירשם  </MenuItem>
       <MenuItem onClick={handleMenuClose}><SettingsIcon />  הגדרות  </MenuItem>
       <Divider />
       <MenuItem onClick={handleLogout}><ExitToAppIcon />  התנתק  </MenuItem>
@@ -196,13 +219,23 @@ export default function TopAppBar({setOpen}) {
             </IconButton>
           </Typography>
           <Container sx={{ display: 'flex', justifyContent: 'center'}}>
-          <Search sx={{minWidth: '400px', ml: 0 }}>
+          <Search sx={{minWidth: '400px', ml: 0 }} >
+          <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
             <StyledInputBase
               placeholder="חיפוש לפי מסעדה"
               inputProps={{ 'aria-label': 'search' }}
-              sx={{display: 'flex', justifyContent: 'center', ml: 5}}
+              onFocus={(e) => e.target.placeholder = ''}
+              onBlur={(e) => e.target.placeholder = 'חיפוש לפי מסעדה'}
+              sx={{display: 'flex', justifyContent: 'end', mr: 0, textAlign: 'end', paddingRight: 0}}
+              onKeyUp={(e) => {
+                if (e.key === 'Enter') {
+                  handleSearch(e.target.value);
+                }}}
+              
             />
-
+          
           </Search>
           </Container>
           <Box sx={{ flexGrow: 1 }} />

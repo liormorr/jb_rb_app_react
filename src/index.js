@@ -11,10 +11,11 @@ import Barspage from './Pages/BarsPage/BarsPage';
 import ChefsPage from './Pages/Chefs/Chefs';
 import MyReservationsPage from './Pages/MyReservations/MyReservations';
 import NearbyPage from './Pages/Nearby/Nearby';
-import LoginPage from './Components/Login/LoginPage';
+import LoginPage from './Components/Login/LoginPage'
 import UserProvider from './Context/UserContext';
 import { ThemeProvider, createTheme } from '@mui/material';
 import BusinessPage from './Pages/BusinessPage/BusinessPage';
+import SignUp from './Components/Login/SignUp';
 
 
 const darkTheme = createTheme({
@@ -37,7 +38,7 @@ const router = createBrowserRouter([{
       element: <RestaurantsPage />
     },
     {
-      path: '/restaurants/:businessId',
+      path: '/Restaurants/:businessId',
       element: <BusinessPage />
     },
     {
@@ -66,7 +67,13 @@ const router = createBrowserRouter([{
   path: '/login',
   element: <LoginPage />
 
-}])
+},
+{
+  path: '/signup',
+  element: <SignUp />
+
+},
+])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
