@@ -13,7 +13,7 @@ export default function RestaurantItem({restList}) {
  
   return(
 
-    <ListItem sx={{height: '500px'}}>
+    <ListItem sx={{height: '500px', padding: '0px'}}>
             <ListItemButton onClick={handleClick}>
                 <BusinessCard restList={restList} />
             </ListItemButton>

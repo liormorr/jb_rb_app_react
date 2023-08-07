@@ -233,6 +233,7 @@ export default function TopAppBar({setOpen}) {
                 if (e.key === 'Enter') {
                   handleSearch(e.target.value);
                 }}}
+              onChange={(e) => {handleSearch(e.target.value)}}
               
             />
           
