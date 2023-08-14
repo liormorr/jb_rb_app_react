@@ -8,7 +8,6 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -18,6 +17,8 @@ import axios from "axios"
 import { useContext } from 'react';
 import { SetUserContext} from '../../Context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
+
 
 const darkTheme = createTheme({
   palette: {
@@ -59,35 +60,54 @@ export default function LoginPage() {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
+          <TableRestaurantIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             היכנס
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1, direction: 'rtl'}}>
             <TextField
               margin="normal"
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="כתובת אימייל"
               name="email"
               autoComplete="email"
               autoFocus
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              InputLabelProps={{
+                style: { textAlign: 'right'}, // Align label text to the right
+              }}
+              sx={{
+                direction: 'rtl', // Set text direction to right-to-left
+                "& .MuiInputBase-input": {
+                  textAlign: 'right', // Align input text to the right
+                },
+              }}
+              
             />
             <TextField
               margin="normal"
               required
               fullWidth
               name="password"
-              label="Password"
+              label="סיסמה"
               type="password"
               id="password"
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              InputLabelProps={{
+                style: { textAlign: 'right'}, // Align label text to the right
+              }}
+              sx={{
+                direction: 'rtl', // Set text direction to right-to-left
+                "& .MuiInputBase-input": {
+                  textAlign: 'right', // Align input text to the right
+                },
+              }}
               
             />
             <FormControlLabel
@@ -102,15 +122,19 @@ export default function LoginPage() {
             >
               היכנס
             </Button>
-            <Grid container>
+            <Grid container >
               <Grid item xs>
                 <Link href="#" variant="body2">
-                  ?שכחת סיסמא
+                  שכחת סיסמה?
                 </Link>
               </Grid>
-              <Grid item>
-                <Link href="#" variant="body2" textAlign={'end'}>
-                  {"!עוד אין לך משתמש? הירשם כאן"}
+              <Grid item >
+                <Link onClick={() => {navigate('/signup')}} variant="body2" sx={{
+    cursor: 'pointer',
+    textAlign: 'end',
+    direction: 'rtl',
+  }} >
+                  {"עוד אין לך משתמש? הירשם כאן!"}
                 </Link>
               </Grid>
             </Grid>

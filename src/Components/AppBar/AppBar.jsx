@@ -24,7 +24,7 @@ import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
 import { RESTAURANTS_LIST_URL } from '../../Infrastracture/urls';
-
+import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -215,11 +215,14 @@ export default function TopAppBar({setOpen}) {
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
             <IconButton onClick={() => {navigation('/')}}>
+              <TableRestaurantIcon />
             ArBe
             </IconButton>
           </Typography>
-          <Container sx={{ display: 'flex', justifyContent: 'center'}}>
-          <Search sx={{minWidth: '400px', ml: 0 }} >
+          <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+          <Search sx={{minWidth: '400px', ml: 0, '& .MuiInputBase-input': {
+      direction: 'rtl',
+    },}} >
           <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>

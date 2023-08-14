@@ -34,7 +34,7 @@ function App() {
       }
     };
     fetchData();
-  }, []);
+  }, [setUser]);
   
 
   return (

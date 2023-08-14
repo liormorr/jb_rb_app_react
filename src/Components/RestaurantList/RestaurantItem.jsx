@@ -1,6 +1,5 @@
 import { ListItem, ListItemButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import RestaurantCard from "../RestaurantCard/RestaurantCard";
 import BusinessCard from "../BusinessCard/BusinessCard";
 
 export default function RestaurantItem({restList}) {
@@ -13,7 +12,9 @@ export default function RestaurantItem({restList}) {
  
   return(
 
-    <ListItem sx={{height: '500px', padding: '0px'}}>
+    <ListItem sx={{height: '500px', '& .MuiButtonBase-root': { paddingLeft: '0px'
+    , paddingRight: '0px', paddingTop: '0px', paddingBottom: '0px'
+    }}}>
             <ListItemButton onClick={handleClick}>
                 <BusinessCard restList={restList} />
             </ListItemButton>
