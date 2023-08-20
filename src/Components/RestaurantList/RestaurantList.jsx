@@ -17,7 +17,7 @@ export default function RestaurantList({restList,loadMore}) {
                 pageStart={0}
                 loadMore={loadMore}
                 hasMore={next !== null}
-                loader={<div className="loader" key={0} style={{direction: 'rtl'}}>רק רגע</div>}>
+                loader={<div className="loader" key={0} >רק רגע</div>}>
                     {items}
             </InfiniteScroll>
         </List>

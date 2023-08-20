@@ -34,11 +34,10 @@ const Search = styled('div')(({ theme }) => ({
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
+  display: 'flex', // Add this line to make the flex layout
+  alignItems: 'center', // Add this line to vertically align the content
   width: '100%',
   [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
     width: 'auto',
   },
 }));
@@ -46,19 +45,15 @@ const Search = styled('div')(({ theme }) => ({
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  display: 'flex', // Add this line to make the flex layout
+  alignItems: 'center', // Add this line to vertically align the content
+  justifyContent: 'center', // Center horizontally
 }));
-
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -67,6 +62,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
+
+
 
 export default function TopAppBar({setOpen}) {
   const user = useContext(UserContext)
@@ -203,7 +200,7 @@ export default function TopAppBar({setOpen}) {
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            sx={{ mr: 2 }}
+            sx={{ ml: 1 }}
             onClick={setOpen}
           >
             <MenuIcon />
@@ -215,23 +212,21 @@ export default function TopAppBar({setOpen}) {
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
             <IconButton onClick={() => {navigation('/')}}>
-              <TableRestaurantIcon />
             ArBe
+            <TableRestaurantIcon />
             </IconButton>
           </Typography>
           <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-          <Search sx={{minWidth: '400px', ml: 0, '& .MuiInputBase-input': {
-      direction: 'rtl',
-    },}} >
-          <SearchIconWrapper>
+          <Search sx={{minWidth: '400px', ml: 0}} >
+          <SearchIconWrapper >
               <SearchIcon />
-            </SearchIconWrapper>
+          </SearchIconWrapper>
             <StyledInputBase
               placeholder="חיפוש לפי מסעדה"
               inputProps={{ 'aria-label': 'search' }}
               onFocus={(e) => e.target.placeholder = ''}
               onBlur={(e) => e.target.placeholder = 'חיפוש לפי מסעדה'}
-              sx={{display: 'flex', justifyContent: 'end', mr: 0, textAlign: 'end', paddingRight: 0}}
+              sx={{display: 'flex', justifyContent: 'start', mr: 0, textAlign: 'start', paddingRight: 0}}
               onKeyUp={(e) => {
                 if (e.key === 'Enter') {
                   handleSearch(e.target.value);

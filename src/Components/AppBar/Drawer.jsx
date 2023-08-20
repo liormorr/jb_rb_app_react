@@ -4,9 +4,10 @@ import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
 // import MuiAppBar from '@mui/material/AppBar';
 import List from '@mui/material/List';
+import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -45,7 +46,7 @@ export default function LeftDrawer({open, setOpen}) {
   };
   
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex'}}>
       <CssBaseline />
       <Drawer
         sx={{
@@ -57,49 +58,53 @@ export default function LeftDrawer({open, setOpen}) {
           },
         }}
         variant="persistent"
-        anchor="left"
+        anchor="right"
         open={open}
       >
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon /> 
+            ArBe
+            <TableRestaurantIcon />
+          <IconButton onClick={handleDrawerClose} sx={{mr: 6}}>
+            <KeyboardDoubleArrowRightIcon /> 
           </IconButton>
         </DrawerHeader>
         <Divider />
         <List>
-            <ListItem key={1} disablePadding >
+            <ListItem key={1} disablePadding>
               <ListItemButton onClick={() => handleChangePage('/Restaurants')}>
-                <ListItemIcon>
+              <ListItemText sx={{textAlign: 'center', direction: 'rtl'}} primary={'מסעדות'} />
+                <ListItemIcon sx={{justifyContent: 'left'}}>
                   <RestaurantIcon />
                 </ListItemIcon>
-                <ListItemText primary={'מסעדות'} />
+                
               </ListItemButton>
             </ListItem>
 
-            <ListItem key={2} disablePadding>
+            <ListItem key={2} disablePadding >
               <ListItemButton onClick={() => handleChangePage('/Bars')}>
-                <ListItemIcon >
+              <ListItemText sx={{textAlign: 'center', direction: 'rtl'}} primary={'ברים'}/>
+                <ListItemIcon sx={{justifyContent: 'left'}}>
                   <NightlifeIcon />
                 </ListItemIcon>
-                <ListItemText primary={'ברים'} />
               </ListItemButton>
             </ListItem>
 
-            <ListItem key={3} disablePadding>
+            <ListItem key={3} disablePadding >
               <ListItemButton onClick={() => handleChangePage('/Winerys')}>
-                <ListItemIcon>
+              <ListItemText sx={{textAlign: 'center', direction: 'rtl'}} primary={'יקבים'} />
+                <ListItemIcon sx={{justifyContent: 'left'}}>
                   <WineBarIcon />
                 </ListItemIcon>
-                <ListItemText primary={'יקבים'} />
+                
               </ListItemButton>
             </ListItem>
 
-            <ListItem key={4} disablePadding>
+            <ListItem key={4} disablePadding >
               <ListItemButton onClick={() => handleChangePage('/Chefs')}>
-                <ListItemIcon>
+              <ListItemText sx={{textAlign: 'center', direction: 'rtl'}} primary={'שפים'} />
+                <ListItemIcon sx={{justifyContent: 'left'}}>
                   <BreakfastDiningIcon />
                 </ListItemIcon>
-                <ListItemText primary={'שפים'} />
               </ListItemButton>
             </ListItem>
 
@@ -107,21 +112,21 @@ export default function LeftDrawer({open, setOpen}) {
         <Divider />
         <List>
 
-        <ListItem key={11} disablePadding>
+        <ListItem key={11} disablePadding >
               <ListItemButton onClick={() => handleChangePage('/MyReservations')}>
-                <ListItemIcon>
+              <ListItemText sx={{textAlign: 'center', direction: 'rtl'}} primary={'ההזמנות שלי'} />
+                <ListItemIcon sx={{justifyContent: 'left'}}>
                   <RoomServiceIcon />
                 </ListItemIcon>
-                <ListItemText primary={'ההזמנות שלי'} />
               </ListItemButton>
             </ListItem>
 
-            <ListItem key={22} disablePadding>
+            <ListItem key={22} disablePadding >
               <ListItemButton onClick={() => handleChangePage('/Nearby')}>
-                <ListItemIcon>
+              <ListItemText sx={{textAlign: 'center', direction: 'rtl'}} primary={'בקרבת מקום'} />
+                <ListItemIcon sx={{justifyContent: 'left'}}>
                   <LocationOnIcon />
                 </ListItemIcon>
-                <ListItemText primary={'בקרבת מקום'} />
               </ListItemButton>
             </ListItem>
 

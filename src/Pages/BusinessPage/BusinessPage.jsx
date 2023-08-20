@@ -69,7 +69,7 @@ export default function BusinessPage() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100vh', // Adjust this to the desired height
+        height: '100vh', 
       }}
     >
     <Box sx={{ maxWidth: 400 }} >

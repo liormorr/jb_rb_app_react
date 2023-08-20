@@ -67,22 +67,19 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
-                  label="שם משפחה"
-                  name="lastName"
-                  autoComplete="family-name"
-                  sx={{textAlign: 'end', direction:'rtl'}}
+                  id="firstName"
+                  label="שם"
+                  name="firstName"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="lastName"
                   required
                   fullWidth
-                  id="firstName"
-                  label="שם"
-                  sx={{textAlign: 'end', direction:'rtl'}}
+                  id="lastName"
+                  label="שם משפחה"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -93,7 +90,6 @@ export default function SignUp() {
                   label="אימייל"
                   name="email"
                   autoComplete="email"
-                  sx={{textAlign: 'end', direction:'rtl'}}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -103,7 +99,6 @@ export default function SignUp() {
               id="phone"
               label="מספר טלפון"
               name='phone'
-              sx={{ textAlign: 'end', direction: 'rtl' }}
             />
                </Grid>
               <Grid item xs={12}>
@@ -115,7 +110,6 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                  sx={{textAlign: 'end', direction:'rtl'}}
                 />
               </Grid>
               
@@ -133,8 +127,6 @@ export default function SignUp() {
                 <Link onClick={() => {navigate('/login')}} variant="body2" 
                 sx={{
                       cursor: 'pointer',
-                      textAlign: 'end',
-                      direction: 'rtl',
                     }} >
                   {"!יש לך כבר משתמש? היכנס/י כאן"}
                 </Link>

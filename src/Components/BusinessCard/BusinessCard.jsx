@@ -13,7 +13,7 @@ import BusinessSocials from './BusinessSocials';
 export default function BusinessCard({restList}) {
 
   return (
-    <Card sx={{ maxWidth: 600, border: '1px solid #fff'}} variant="outlined">
+    <Card sx={{ maxWidth: 600, border: '1px solid #fff'}} variant="outlined" >
       <CardActionArea>
       <CardHeader
         title={restList.name}
@@ -51,8 +51,8 @@ export default function BusinessCard({restList}) {
         }}
         
       />
-      <CardContent>
-        <Typography variant="body2" color="text.secondary" textAlign="right" sx={{direction: 'rtl'}}>
+      <CardContent sx={{padding: '5px'}}>
+        <Typography variant="body2" color="text.secondary" textAlign="right" >
           {restList.description}
         </Typography>
       </CardContent>

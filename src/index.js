@@ -16,6 +16,7 @@ import UserProvider from './Context/UserContext';
 import { ThemeProvider, createTheme } from '@mui/material';
 import BusinessPage from './Pages/BusinessPage/BusinessPage';
 import SignUp from './Components/Login/SignUp';
+import Notification from './Components/Notifications/Notifications';
 
 
 const darkTheme = createTheme({
@@ -78,9 +79,11 @@ const router = createBrowserRouter([{
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ThemeProvider theme={darkTheme}>
+  <Notification>
     <UserProvider>
       <RouterProvider router={router} />
     </UserProvider>
+  </Notification>
     </ThemeProvider>
 );
 

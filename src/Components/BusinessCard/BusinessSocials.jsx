@@ -37,16 +37,18 @@ export default function BusinessSocials({Socials}) {
 
   return (
     <Box
-      sx={{
-        display: 'flex',
-        '& > *': {
-          m: 1,
-        },
-      }}
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-end',
+      '& > *': {
+        m: 1,
+      },
+    }}
     >
       <ButtonGroup
         orientation="horizontal"
-        aria-label="vertical outlined button group"
+        variant="outlined"
       >
         <div onClick={(e) => e.stopPropagation()}>
           {buttons.map((button) => (

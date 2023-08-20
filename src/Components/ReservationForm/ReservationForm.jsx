@@ -1,4 +1,3 @@
-
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -19,13 +18,8 @@ export default function ReservationForm() {
   };
 
   return (
-  <Stack direction="row" spacing={4} justifyContent={'center'}>
-    <FormControl variant="filled" sx={{ width: 220 }}>
-  <LocalizationProvider dateAdapter={AdapterDayjs}>
-    <DatePicker disablePast label='תאריך' />
-  </LocalizationProvider>
-  </FormControl>
-  <FormControl fullWidth variant="outlined" sx={{ width: 220 }}>
+  <Stack direction="row" spacing={4} justifyContent={'center'} margin={5}>
+  <FormControl fullWidth variant="outlined" sx={{ width: 220}}>
     <InputLabel id="demo-simple-select-filled-label">כמות אנשים</InputLabel>
     <Select
       labelId="demo-simple-select-filled-label"
@@ -50,6 +44,7 @@ export default function ReservationForm() {
       value={partySize}
       label="partySize"
       onChange={handleChange}
+      
     >
       <MenuItem value={2}>2</MenuItem>
       <MenuItem value={3}>3</MenuItem>
@@ -58,6 +53,11 @@ export default function ReservationForm() {
       <MenuItem value={6}>6</MenuItem>
       <MenuItem value={7}>7+</MenuItem>
     </Select>
+  </FormControl>
+  <FormControl variant="filled" sx={{ width: 220 }}>
+  <LocalizationProvider dateAdapter={AdapterDayjs} weekStartsOn={0}>
+    <DatePicker disablePast label='תאריך' format='DD/MM/YYYY'/>
+  </LocalizationProvider>
   </FormControl>
   
 </Stack> 

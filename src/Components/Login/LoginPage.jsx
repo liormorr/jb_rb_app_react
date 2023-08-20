@@ -18,6 +18,7 @@ import { useContext } from 'react';
 import { SetUserContext} from '../../Context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
+import { setNotificationContext } from '../../Context/NotificationContext';
 
 
 const darkTheme = createTheme({
@@ -33,10 +34,12 @@ export default function LoginPage() {
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
   const setUser = useContext(SetUserContext)
+  const notification = useContext(setNotificationContext)
 
 
   const handleSubmit = async(event) => {
     event.preventDefault();
+    try {
     const response = await axios.post(LOGIN_URL, {username: email, password: password})
     localStorage.setItem('token', response.data.access)
     const token = localStorage.getItem('token')
@@ -45,6 +48,11 @@ export default function LoginPage() {
       user: {...userDetailsResponse.data.results[0]}
     })
     navigate('/')
+      } catch (e) {
+        console.log(e)
+        // notification.error(e.response.data.detail);
+        notification.error('בדיקה');
+      }
   };
 
   return(
@@ -65,7 +73,7 @@ export default function LoginPage() {
           <Typography component="h1" variant="h5">
             היכנס
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1, direction: 'rtl'}}>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1}}>
             <TextField
               margin="normal"
               required
@@ -80,12 +88,7 @@ export default function LoginPage() {
               InputLabelProps={{
                 style: { textAlign: 'right'}, // Align label text to the right
               }}
-              sx={{
-                direction: 'rtl', // Set text direction to right-to-left
-                "& .MuiInputBase-input": {
-                  textAlign: 'right', // Align input text to the right
-                },
-              }}
+   
               
             />
             <TextField
@@ -101,12 +104,6 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               InputLabelProps={{
                 style: { textAlign: 'right'}, // Align label text to the right
-              }}
-              sx={{
-                direction: 'rtl', // Set text direction to right-to-left
-                "& .MuiInputBase-input": {
-                  textAlign: 'right', // Align input text to the right
-                },
               }}
               
             />
@@ -130,10 +127,8 @@ export default function LoginPage() {
               </Grid>
               <Grid item >
                 <Link onClick={() => {navigate('/signup')}} variant="body2" sx={{
-    cursor: 'pointer',
-    textAlign: 'end',
-    direction: 'rtl',
-  }} >
+                    cursor: 'pointer',
+                  }} >
                   {"עוד אין לך משתמש? הירשם כאן!"}
                 </Link>
               </Grid>
