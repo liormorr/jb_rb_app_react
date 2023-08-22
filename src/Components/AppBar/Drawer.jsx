@@ -1,8 +1,6 @@
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
-// import MuiAppBar from '@mui/material/AppBar';
 import List from '@mui/material/List';
 import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
 import Divider from '@mui/material/Divider';
@@ -47,7 +45,6 @@ export default function LeftDrawer({open, setOpen}) {
   
   return (
     <Box sx={{ display: 'flex'}}>
-      <CssBaseline />
       <Drawer
         sx={{
           width: drawerWidth,

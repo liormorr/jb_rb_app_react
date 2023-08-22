@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
@@ -12,6 +11,15 @@ import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { USER_REGISTRATION_URL } from '../../Infrastracture/urls';
+import rtlPlugin from 'stylis-plugin-rtl';
+import { prefixer } from 'stylis';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
+
+const cacheRtl = createCache({
+  key: 'muirtl',
+  stylisPlugins: [prefixer, rtlPlugin],
+});
 
 
 
@@ -45,8 +53,8 @@ export default function SignUp() {
 
 
   return (
+    <CacheProvider value={cacheRtl}>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
         <Box
           sx={{
             marginTop: 8,
@@ -135,5 +143,6 @@ export default function SignUp() {
           </Box>
         </Box>
       </Container>
+      </CacheProvider>
   );
 }

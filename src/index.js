@@ -13,20 +13,23 @@ import MyReservationsPage from './Pages/MyReservations/MyReservations';
 import NearbyPage from './Pages/Nearby/Nearby';
 import LoginPage from './Components/Login/LoginPage'
 import UserProvider from './Context/UserContext';
-import { ThemeProvider, createTheme } from '@mui/material';
+import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import BusinessPage from './Pages/BusinessPage/BusinessPage';
 import SignUp from './Components/Login/SignUp';
 import Notification from './Components/Notifications/Notifications';
 
 
+
+
 const darkTheme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: 'dark'
   },
 });
 
 
-const router = createBrowserRouter([{
+const router = createBrowserRouter([
+  {
   path: '/',
   element: <App />,
   children:[
@@ -79,12 +82,13 @@ const router = createBrowserRouter([{
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ThemeProvider theme={darkTheme}>
-  <Notification>
-    <UserProvider>
-      <RouterProvider router={router} />
-    </UserProvider>
-  </Notification>
-    </ThemeProvider>
+    <CssBaseline />
+    <Notification>
+      <UserProvider>
+        <RouterProvider router={router} />
+      </UserProvider>
+    </Notification>
+  </ThemeProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

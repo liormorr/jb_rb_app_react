@@ -20,11 +20,21 @@ import { useNavigate } from 'react-router-dom';
 import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
 import { setNotificationContext } from '../../Context/NotificationContext';
 
+import rtlPlugin from 'stylis-plugin-rtl';
+import { prefixer } from 'stylis';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
 
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
   },
+});
+
+// Create rtl cache
+const cacheRtl = createCache({
+  key: 'muirtl',
+  stylisPlugins: [prefixer, rtlPlugin],
 });
 
 
@@ -56,6 +66,7 @@ export default function LoginPage() {
   };
 
   return(
+    <CacheProvider value={cacheRtl}>
     <ThemeProvider theme={darkTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -137,6 +148,7 @@ export default function LoginPage() {
         </Box>
       </Container>
     </ThemeProvider>
+    </CacheProvider>
   )
 }
 

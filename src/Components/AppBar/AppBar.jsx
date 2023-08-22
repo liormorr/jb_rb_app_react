@@ -6,12 +6,9 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Avatar, Container, Divider } from '@mui/material';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
@@ -156,38 +153,11 @@ export default function TopAppBar({setOpen}) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <Avatar alt={user.user?.first_name} />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+      <MenuItem onClick={() => handleChangePage('/login')}><PermIdentityIcon/> היכנס </MenuItem>
+      <MenuItem onClick={() => handleChangePage('/signup')}><AddIcon />  הירשם  </MenuItem>
+      <MenuItem onClick={handleMenuClose}><SettingsIcon />  הגדרות  </MenuItem>
+      <Divider />
+      <MenuItem onClick={handleLogout}><ExitToAppIcon />  התנתק  </MenuItem>
     </Menu>
   );
 
@@ -212,32 +182,39 @@ export default function TopAppBar({setOpen}) {
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
             <IconButton onClick={() => {navigation('/')}}>
+            <Typography
+            variant="button"
+            noWrap
+            component="div"
+            sx={{ display: { xs: 'none', sm: 'block' } }}
+          >
             ArBe
+            </Typography>
             <TableRestaurantIcon />
             </IconButton>
           </Typography>
-          <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-          <Search sx={{minWidth: '400px', ml: 0}} >
-          <SearchIconWrapper >
-              <SearchIcon />
-          </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="חיפוש לפי מסעדה"
-              inputProps={{ 'aria-label': 'search' }}
-              onFocus={(e) => e.target.placeholder = ''}
-              onBlur={(e) => e.target.placeholder = 'חיפוש לפי מסעדה'}
-              sx={{display: 'flex', justifyContent: 'start', mr: 0, textAlign: 'start', paddingRight: 0}}
-              onKeyUp={(e) => {
-                if (e.key === 'Enter') {
-                  handleSearch(e.target.value);
-                }}}
-              onChange={(e) => {handleSearch(e.target.value)}}
-              
-            />
-          
-          </Search>
+          <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: {xs:'100%', md: '40%'}}}>
+            <Search sx={{ ml: 0, flex: 1}} >
+              <SearchIconWrapper >
+                  <SearchIcon />
+              </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="חיפוש לפי מסעדה"
+                  inputProps={{ 'aria-label': 'search' }}
+                  onFocus={(e) => e.target.placeholder = ''}
+                  onBlur={(e) => e.target.placeholder = 'חיפוש לפי מסעדה'}
+                  sx={{display: 'flex', justifyContent: 'start', mr: 0, textAlign: 'start', paddingRight: 0}}
+                  onKeyUp={(e) => {
+                    if (e.key === 'Enter') {
+                      handleSearch(e.target.value);
+                    }}}
+                  onChange={(e) => {handleSearch(e.target.value)}}
+                  
+                />
+            
+            </Search>
           </Container>
-          <Box sx={{ flexGrow: 1 }} />
+          {/* <Box sx={{ flexGrow: 1 }} /> */}
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton
               size="medium"
