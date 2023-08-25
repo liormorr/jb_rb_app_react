@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { useContext } from 'react';
 import { SetUserContext, UserContext } from './Context/UserContext';
-import { USER_DETAILS_URL } from './Infrastracture/urls';
+import { ME_USER_URL } from './Infrastracture/urls';
 
 function App() {
   const [open, setOpen] = useState(false);
@@ -22,7 +22,7 @@ function App() {
       try {
         const token = localStorage.getItem('token');
         if (token) {
-          const userDetailsResponse = await axios.get(USER_DETAILS_URL, {
+          const userDetailsResponse = await axios.get(ME_USER_URL, {
             headers: { Authorization: `Bearer ${token}` },
           });
           setUser({

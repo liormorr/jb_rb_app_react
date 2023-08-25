@@ -21,10 +21,12 @@ import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
 import SmokingRoomsIcon from '@mui/icons-material/SmokingRooms';
 import LocalBarIcon from '@mui/icons-material/LocalBar';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
-
 import rtlPlugin from 'stylis-plugin-rtl';
 import { prefixer } from 'stylis';
 import { UserContext } from '../../Context/UserContext';
+import axios from 'axios';
+import { POST_RESERVATION_URL } from '../../Infrastracture/urls';
+import { setNotificationContext } from '../../Context/NotificationContext';
 
 const cacheRtl = createCache({
   key: 'muirtl',
@@ -61,7 +63,7 @@ function generateTimeSlots(selectedDate) {
   return timeSlots;
 }
 
-export default function ReservationForm({business}) {
+export default function ReservationForm({restDetails}) {
   const [partySize, setPartySize] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
   const [selectedDate, setSelectedDate] = useState(null); 
@@ -69,13 +71,14 @@ export default function ReservationForm({business}) {
   const [barSeat, setBarSeat] = useState(false);
   const [outside, setOutside] = useState(false);
   const [userComment, setUserComment] = useState('');
+  const notification = useContext(setNotificationContext)
 
   const user = useContext(UserContext)
 
   console.log('Reservation Form user',user)
-  console.log('Reservation Form business',business)
-
-
+  console.log('Reservation Form business',restDetails)
+  
+  console.log('test', user.user.id)
   const handleChangeUserComment = (event) => {
     setUserComment(event.target.value);
   };
@@ -106,25 +109,42 @@ export default function ReservationForm({business}) {
     setBarSeat((prevState) => !prevState);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const reservationData = {
-      restaurant_id: business.id,
-      user_id: user.user.id,
-      phone_number: user.phone_number,
-      email_address: user.email_address,
-      party_size: partySize,
-      reservation_time: selectedTime,
-      reservation_date: selectedDate,
-      user_comment: userComment,
-      is_smoking: smoking,
-      bar: barSeat,
-      outside: outside
-    };
-    console.log(reservationData)
-  
-  };
+    if (user && user.user) {
+      const formattedDate = dayjs(selectedDate).format('YYYY-MM-DD')
 
+      const reservationData = {
+        restaurant_id: restDetails.id,
+        user_id: user.user.user.id,
+        phone_number: user.user.phone_number,
+        email_address: user.user.user.email,
+        party_size: partySize,
+        reservation_time: selectedTime,
+        reservation_date: formattedDate,
+        user_comment: userComment,
+        is_smoking: smoking,
+        bar: barSeat,
+        outside: outside
+      }; 
+      console.log('reservation request', reservationData)
+      try {
+        const response = await axios.post(POST_RESERVATION_URL, reservationData, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        console.log('Reservation created:', response.data);
+        notification.success(`ההזמנה נשלחה למסעדה:\n${restDetails.name}`)
+      } catch (error) {
+        console.error('Error creating reservation:', error);
+        notification.error(`ההזמנה נכשלה למסעדה ${restDetails.name}`)
+      }
+    } else {
+      console.log("User data is not available.");
+    }
+  };
   useEffect(() => {
     setSelectedTime('');
   }, [selectedDate]);

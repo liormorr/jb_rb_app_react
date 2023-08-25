@@ -5,9 +5,7 @@ export const UserContext = createContext(null)
 export const SetUserContext = createContext(null)
 
 const UserProvider = ({children}) => {
-    const [user, setUser] = useState({
-      user: null
-    })
+  const [user, setUser] = useState(null)
 
     return (
 
