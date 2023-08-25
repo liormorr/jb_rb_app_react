@@ -22,6 +22,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
 import { RESTAURANTS_LIST_URL } from '../../Infrastracture/urls';
 import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
+import { green, pink } from '@mui/material/colors';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -59,6 +60,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
+
+
 
 
 
@@ -225,7 +228,7 @@ export default function TopAppBar({setOpen}) {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <Avatar alt={user.user?.first_name} />
+              <Avatar sx={{ bgcolor: user ? green[500] : pink[500] }} />
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

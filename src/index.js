@@ -23,7 +23,7 @@ import Notification from './Components/Notifications/Notifications';
 
 const darkTheme = createTheme({
   palette: {
-    mode: 'dark'
+    mode: 'dark',
   },
 });
 

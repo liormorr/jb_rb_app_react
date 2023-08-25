@@ -1,20 +1,30 @@
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import { Button, Container, Stack } from '@mui/material';
-import { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import {
+  Box,
+  Button,
+  Container,
+  Stack,
+  TextField,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import rtlPlugin from 'stylis-plugin-rtl';
-import { prefixer } from 'stylis';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
-import { isAfter } from 'date-fns'; 
-import { useEffect } from 'react';
+import { isAfter } from 'date-fns';
 import dayjs from 'dayjs';
 import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
+import SmokingRoomsIcon from '@mui/icons-material/SmokingRooms';
+import LocalBarIcon from '@mui/icons-material/LocalBar';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
+
+import rtlPlugin from 'stylis-plugin-rtl';
+import { prefixer } from 'stylis';
+import { UserContext } from '../../Context/UserContext';
 
 const cacheRtl = createCache({
   key: 'muirtl',
@@ -46,70 +56,87 @@ function generateTimeSlots(selectedDate) {
       const timeSlot = `${formattedHour}:${formattedMinutes}`;
       timeSlots.push(timeSlot);
     }
-    startMinutes = 0; 
+    startMinutes = 0;
   }
   return timeSlots;
 }
 
-
-export default function ReservationForm() {
+export default function ReservationForm({business}) {
   const [partySize, setPartySize] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
   const [selectedDate, setSelectedDate] = useState(null); 
+  const [smoking, isSmoking] = useState(false);
+  const [barSeat, setBarSeat] = useState(false);
+  const [outside, setOutside] = useState(false);
+  const [userComment, setUserComment] = useState('');
 
-  console.log(selectedDate)
+  const user = useContext(UserContext)
 
-  const handleTimeChange = (event) => {
-    setSelectedTime(event.target.value);
+  console.log('Reservation Form user',user)
+  console.log('Reservation Form business',business)
+
+
+  const handleChangeUserComment = (event) => {
+    setUserComment(event.target.value);
   };
+
 
   const handleChange = (event) => {
     setPartySize(event.target.value);
   };
 
   const handleDateChange = (date) => {
-    const newDate = dayjs(date).toDate()
+    const newDate = dayjs(date).toDate();
     setSelectedDate(newDate);
+  };
+
+  const handleTimeChange = (event) => {
+    setSelectedTime(event.target.value);
+  };
+
+  const toggleOutside = () => {
+    setOutside((prevState) => !prevState);
+  };
+
+  const toggleSmoking = () => {
+    isSmoking((prevState) => !prevState);
+  };
+
+  const toggleBar = () => {
+    setBarSeat((prevState) => !prevState);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // const data = new FormData(event.currentTarget);
-  //   const reservationData = {
-  //       email: data.get('email'),
-  //       password: data.get('password'),
-  //       first_name: data.get('firstName'),
-  //       last_name: data.get('lastName'),
-  //       phone_number: data.get('phone'),
-  //   };
-  //   console.log('data',data)
-  //   try {
-  //     const response = await axios.post(USER_REGISTRATION_URL, userData);
+    const reservationData = {
+      restaurant_id: business.id,
+      user_id: user.user.id,
+      phone_number: user.phone_number,
+      email_address: user.email_address,
+      party_size: partySize,
+      reservation_time: selectedTime,
+      reservation_date: selectedDate,
+      user_comment: userComment,
+      is_smoking: smoking,
+      bar: barSeat,
+      outside: outside
+    };
+    console.log(reservationData)
   
-  //     if (response.status === 201) {
-  //       console.log('success', response.data)
-  //     } else {
-  //       console.log('failure', response.data)
-  //     }
-  //   } catch (error) {
-  //     console.log('error', error)
-  //   }
-  // };
-  }
+  };
 
   useEffect(() => {
-    setSelectedTime(''); 
+    setSelectedTime('');
   }, [selectedDate]);
 
   return (
     <CacheProvider value={cacheRtl}>
       <Container maxWidth="md">
-        <Stack direction="row" spacing={4} justifyContent={'center'} margin={5}>
+        <Stack direction="row" spacing={4} justifyContent="center" margin={5}>
+          {/* Party Size */}
           <FormControl fullWidth variant="outlined" sx={{ width: '80%' }}>
-            <InputLabel id="demo-simple-select-filled-label">כמות אנשים</InputLabel>
+            <InputLabel>כמות אנשים</InputLabel>
             <Select
-              labelId="demo-simple-select-filled-label"
-              id="demo-simple-select-filled"
               value={partySize}
               label="partySize"
               onChange={handleChange}
@@ -121,14 +148,24 @@ export default function ReservationForm() {
               ))}
             </Select>
           </FormControl>
+          {/* Date */}
+          <FormControl variant="filled" sx={{ width: '80%' }}>
+            <LocalizationProvider dateAdapter={AdapterDayjs} weekStartsOn={0}>
+              <DatePicker
+                disablePast
+                label="תאריך"
+                format="DD/MM/YYYY"
+                value={selectedDate}
+                onChange={handleDateChange}
+              />
+            </LocalizationProvider>
+          </FormControl>
+          {/* Time */}
           <FormControl variant="outlined" sx={{ width: '80%' }}>
-            <InputLabel id="demo-simple-select-filled-label">שעה</InputLabel>
+            <InputLabel>שעה</InputLabel>
             <Select
-              labelId="demo-simple-select-filled-label"
-              id="demo-simple-select-filled"
               value={selectedTime}
               label="timeSlot"
-              name='timeSlot'
               onChange={handleTimeChange}
             >
               {generateTimeSlots(selectedDate).map((timeSlot) => (
@@ -138,29 +175,60 @@ export default function ReservationForm() {
               ))}
             </Select>
           </FormControl>
-          <FormControl variant="filled" sx={{ width: '80%' }}>
-            <LocalizationProvider dateAdapter={AdapterDayjs} weekStartsOn={0}>
-              <DatePicker
-                disablePast
-                label='תאריך'
-                format='DD/MM/YYYY'
-                value={selectedDate} 
-                onChange={handleDateChange} 
-              />
-            </LocalizationProvider>
-          </FormControl>
-          <Button 
-          variant="contained" 
-          endIcon={<TableRestaurantIcon />} 
-          type="submit"
-          sx={{ mt: 3, mb: 2, width: '30%'}}
-          color='success'
-          onClick={handleSubmit}>
+        </Stack>
+        <Stack direction="row" spacing={2} justifyContent="center" margin={5}>
+          {/* Additional Comments */}
+          <Box sx={{ width: '100%' }}>
+            <TextField 
+            fullWidth 
+            label="הערות נוספות" 
+            id="userComment" 
+            value={userComment}
+            onChange={handleChangeUserComment} />
+          </Box>
+          {/* Submit Button */}
+          <Button
+            variant="outlined"
+            endIcon={<TableRestaurantIcon />}
+            type="submit"
+            sx={{ mt: 3, mb: 2, width: '30%' }}
+            color="success"
+            onClick={handleSubmit}
+          >
             הזמנה
           </Button>
         </Stack>
+        {/* Seating Preferences */}
+        <Stack direction="row" spacing={10} justifyContent="center" margin={5} alignItems="center" display="flex">
+      <Button
+        variant={smoking ? 'contained' : 'outlined'}
+        size="large"
+        color={smoking ? 'success' : 'error'}
+        onClick={toggleSmoking}
+      >
+        מעשנים
+        <SmokingRoomsIcon style={{ marginRight: '8px' }} />
+      </Button>
+      <Button
+        variant={barSeat ? 'contained' : 'outlined'}
+        size="large"
+        color={barSeat ? 'success' : 'error'}
+        onClick={toggleBar}
+      >
+        על הבר
+        <LocalBarIcon style={{ marginRight: '8px' }} />
+      </Button>
+      <Button
+        variant={outside ? 'contained' : 'outlined'}
+        size="large"
+        color={outside ? 'success' : 'error'}
+        onClick={toggleOutside}
+      >
+        בחוץ
+        <WbSunnyIcon style={{ marginRight: '8px' }} />
+      </Button>
+    </Stack>
       </Container>
     </CacheProvider>
-
   );
 }
