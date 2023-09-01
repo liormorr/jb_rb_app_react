@@ -31,8 +31,6 @@ useEffect(
 )
 
   return(
-    <>
-    <h2>Restaurant Page</h2>
     <Stack 
     direction={'colum'} 
     alignItems={'center'} 
@@ -41,6 +39,5 @@ useEffect(
     divider={<Divider orientation="horizontal" flexItem />}>
     <RestaurantList restList={restList} loadMore={fetchData} />
     </Stack>
-      </>
   )
 }

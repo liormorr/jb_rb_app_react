@@ -17,6 +17,7 @@ import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import BusinessPage from './Pages/BusinessPage/BusinessPage';
 import SignUp from './Components/Login/SignUp';
 import Notification from './Components/Notifications/Notifications';
+import ProfilePage from './Components/ProfilePage/ProfilePage';
 
 
 
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
   element: <SignUp />
 
 },
+{
+  path: '/profile',
+  element: <ProfilePage />
+}
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -75,10 +75,6 @@ export default function ReservationForm({restDetails}) {
 
   const user = useContext(UserContext)
 
-  console.log('Reservation Form user',user)
-  console.log('Reservation Form business',restDetails)
-  
-  console.log('test', user.user.id)
   const handleChangeUserComment = (event) => {
     setUserComment(event.target.value);
   };

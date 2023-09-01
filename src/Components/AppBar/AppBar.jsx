@@ -23,6 +23,7 @@ import axios from 'axios';
 import { RESTAURANTS_LIST_URL } from '../../Infrastracture/urls';
 import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
 import { green, pink } from '@mui/material/colors';
+import { useEffect } from 'react';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -71,9 +72,23 @@ export default function TopAppBar({setOpen}) {
   const navigation = useNavigate()
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [name, setName] = React.useState('')
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  useEffect(() => {
+    if (user && user.user && user.user.user) {
+      const capitalizedFirstName = capitalizeFirstLetter(user.user.user.first_name);
+      const capitalizedLastName = capitalizeFirstLetter(user.user.user.last_name);
+      const fullName = `${capitalizedFirstName} ${capitalizedLastName}`;
+      setName(fullName);
+    }
+  }, [user]);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -100,9 +115,10 @@ export default function TopAppBar({setOpen}) {
   }
   const handleLogout = () => {
     localStorage.removeItem('token')
-    setUser({user: null})
+    setUser(null)
     setAnchorEl(null)
-    handleMobileMenuClose()
+    handleMobileMenuClose() 
+    setName('')
 
   }
 
@@ -131,11 +147,31 @@ export default function TopAppBar({setOpen}) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={() => handleChangePage('/login')}><PermIdentityIcon/> היכנס </MenuItem>
-      <MenuItem onClick={() => handleChangePage('/signup')}><AddIcon />  הירשם  </MenuItem>
-      <MenuItem onClick={handleMenuClose}><SettingsIcon />  הגדרות  </MenuItem>
-      <Divider />
-      <MenuItem onClick={handleLogout}><ExitToAppIcon />  התנתק  </MenuItem>
+
+        {user ? (
+        <>
+        
+          <MenuItem disabled>{name}</MenuItem>
+          <Divider />
+          <MenuItem onClick={() => handleChangePage('/profile')}>
+            <SettingsIcon /> הגדרות
+          </MenuItem>
+          <MenuItem onClick={handleLogout}>
+            <ExitToAppIcon /> התנתק
+          </MenuItem>
+          <Divider />
+        </>
+      ) : (
+        <>
+          <MenuItem onClick={() => handleChangePage('/login')}>
+            <PermIdentityIcon /> כניסה
+          </MenuItem>
+          <MenuItem onClick={() => handleChangePage('/signup')}>
+            <AddIcon /> הרשמה
+          </MenuItem>
+          <Divider />
+        </>
+      )}
     </Menu>
   );
 
@@ -156,11 +192,30 @@ export default function TopAppBar({setOpen}) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem onClick={() => handleChangePage('/login')}><PermIdentityIcon/> היכנס </MenuItem>
-      <MenuItem onClick={() => handleChangePage('/signup')}><AddIcon />  הירשם  </MenuItem>
-      <MenuItem onClick={handleMenuClose}><SettingsIcon />  הגדרות  </MenuItem>
-      <Divider />
-      <MenuItem onClick={handleLogout}><ExitToAppIcon />  התנתק  </MenuItem>
+      {user ? (
+        <>
+        
+          <MenuItem disabled>{name}</MenuItem>
+          <Divider />
+          <MenuItem onClick={() => handleChangePage('/profile')}>
+            <SettingsIcon /> הגדרות
+          </MenuItem>
+          <MenuItem onClick={handleLogout}>
+            <ExitToAppIcon /> התנתק
+          </MenuItem>
+          <Divider />
+        </>
+      ) : (
+        <>
+          <MenuItem onClick={() => handleChangePage('/login')}>
+            <PermIdentityIcon /> כניסה
+          </MenuItem>
+          <MenuItem onClick={() => handleChangePage('/signup')}>
+            <AddIcon /> הרשמה
+          </MenuItem>
+          <Divider />
+        </>
+      )}
     </Menu>
   );
 

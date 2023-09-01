@@ -17,6 +17,8 @@ import BreakfastDiningIcon from '@mui/icons-material/BreakfastDining';
 import RoomServiceIcon from '@mui/icons-material/RoomService';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from '../../Context/UserContext';
 
 
 const drawerWidth = 240;
@@ -33,6 +35,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 export default function LeftDrawer({open, setOpen}) {
   const navigation = useNavigate()
+  const user = useContext(UserContext)
 
   const handleDrawerClose = () => {
     setOpen(false);
@@ -108,7 +111,7 @@ export default function LeftDrawer({open, setOpen}) {
         </List>
         <Divider />
         <List>
-
+        {user ? (
         <ListItem key={11} disablePadding >
               <ListItemButton onClick={() => handleChangePage('/MyReservations')}>
               <ListItemText sx={{textAlign: 'center', direction: 'rtl'}} primary={'ההזמנות שלי'} />
@@ -117,6 +120,7 @@ export default function LeftDrawer({open, setOpen}) {
                 </ListItemIcon>
               </ListItemButton>
             </ListItem>
+            ) : null}
 
             <ListItem key={22} disablePadding >
               <ListItemButton onClick={() => handleChangePage('/Nearby')}>
@@ -126,9 +130,6 @@ export default function LeftDrawer({open, setOpen}) {
                 </ListItemIcon>
               </ListItemButton>
             </ListItem>
-
-
-            {/* (// maybe more items here) */}
         </List>
       </Drawer>
     </Box>

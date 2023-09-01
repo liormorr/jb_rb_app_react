@@ -31,7 +31,6 @@ const darkTheme = createTheme({
   },
 });
 
-// Create rtl cache
 const cacheRtl = createCache({
   key: 'muirtl',
   stylisPlugins: [prefixer, rtlPlugin],
@@ -57,6 +56,7 @@ export default function LoginPage() {
     setUser({
       user: {...userDetailsResponse.data.results[0]}
     })
+    notification.success(`ברוכים הבאים`);
     navigate('/')
       } catch (e) {
         console.log(e)

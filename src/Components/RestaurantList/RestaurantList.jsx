@@ -1,4 +1,4 @@
-import { List } from "@mui/material";
+import { Container, List, Pagination, Stack } from "@mui/material";
 import RestaurantItem from "./RestaurantItem"
 import InfiniteScroll from 'react-infinite-scroll-component'
 
@@ -10,7 +10,8 @@ export default function RestaurantList({restList,loadMore}) {
       return <RestaurantItem key={restList.id} restList={restList} />
   })
     return(
-        
+        <>
+        <Stack direction={"column"}>
       <List >
             <InfiniteScroll
                 dataLength={items.length}
@@ -21,7 +22,14 @@ export default function RestaurantList({restList,loadMore}) {
                     {items}
             </InfiniteScroll>
         </List>
-    
+        <Container sx={{display: 'flex', justifyContent: 'center'}}>
+        <Stack direction={"column"} spacing={3}>
+        <Pagination count={count} />
+        </Stack>
+        </Container>
+        </Stack>
+
+      </>
     )
 }
     
